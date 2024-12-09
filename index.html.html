@@ -1,0 +1,691 @@
+<html><head><base href="https://pousadarustica.com">
+<style>
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    max-width: 500px;
+    width: 100%;
+  }
+
+  h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .reward-card {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .discount-code {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin: 15px 0;
+    letter-spacing: 2px;
+  }
+
+  .share-section {
+    text-align: center;
+    margin: 30px 0;
+  }
+
+  .share-link {
+    padding: 12px;
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid #e1e1e1;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #f8f9fa;
+  }
+
+  .verification-input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #e1e1e1;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+
+  .verification-input:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+
+  .copy-btn, .whatsapp-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+    margin: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .copy-btn:hover, .whatsapp-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .referral-count {
+    text-align: center;
+    font-size: 18px;
+    margin: 20px 0;
+    color: #2c3e50;
+  }
+
+  .benefits-list {
+    margin: 25px 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .benefits-list li {
+    padding: 12px 15px;
+    margin: 8px 0;
+    background: #f8f9fa;
+    border-radius: 6px;
+    color: #2c3e50;
+    font-size: 14px;
+  }
+
+  .progress-container {
+    width: 100%;
+    background: #f0f0f0;
+    border-radius: 8px;
+    margin: 25px 0;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 8px;
+    transition: width 0.5s ease;
+  }
+
+  .admin-trigger {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #34495e;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 998;
+    font-size: 13px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+
+  .admin-trigger:hover {
+    opacity: 1;
+  }
+
+  .admin-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: none;
+  }
+
+  .referral-info {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .referral-info h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+  }
+
+  .referral-info ol {
+    padding-left: 20px;
+  }
+
+  .referral-info li {
+    margin: 8px 0;
+    color: #34495e;
+  }
+
+  .admin-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none;
+  }
+
+  .admin-login {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: none;
+  }
+
+  .admin-login-content {
+    text-align: center;
+  }
+
+  .close-admin {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .delete-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .delete-btn:hover {
+    background: #c0392b;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Programa de Fidelidade Pousada Rústica</h1>
+    
+    <div class="reward-card">
+      <h2>Seu Código de Desconto</h2>
+      <div class="discount-code" id="discountCode">AMIGO10</div>
+      <p>Compartilhe e ganhe 10% de desconto na próxima estadia!</p>
+    </div>
+
+    <div class="referral-info">
+      <h3>Como funciona a verificação de indicação:</h3>
+      <ol>
+        <li>Compartilhe seu link único com amigos</li>
+        <li>Cadastre seu WhatsApp abaixo para validar suas indicações</li>
+        <li>O sistema registra automaticamente cada pessoa que usar seu link</li>
+        <li>Os descontos são liberados conforme o número de indicações confirmadas</li>
+      </ol>
+    </div>
+
+    <div class="share-section">
+      <h3>Identifique-se para compartilhar:</h3>
+      <input type="text" id="userName" class="verification-input" placeholder="Seu Nome Completo" required>
+      <input type="tel" id="userWhatsApp" class="verification-input" placeholder="Seu WhatsApp (ex: 11999999999)" required>
+      <input type="text" class="share-link" id="shareLink" readonly value="https://www.pousadarustica.com/?ref=AMIGO10">
+      <button class="copy-btn" onclick="copyLink()">Copiar Link</button>
+      <button class="whatsapp-btn" onclick="shareWhatsApp()">
+        Compartilhar no WhatsApp
+      </button>
+    </div>
+
+    <div class="referral-count">
+      Indicações realizadas: <span id="referralCount">0</span>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <ul class="benefits-list">
+      <li>🎁 1 indicação = 10% de desconto</li>
+      <li>🌟 3 indicações = 15% de desconto</li>
+    </ul>
+  </div>
+
+  <div class="admin-trigger" onclick="showAdminPanel()">Admin</div>
+
+  <div class="admin-overlay" id="adminOverlay" onclick="hideAdminPanel()"></div>
+
+  <div class="admin-login" id="adminLogin">
+    <div class="admin-login-content">
+      <h2>Login Administrativo</h2>
+      <input type="password" id="adminPassword" placeholder="Senha" class="verification-input">
+      <button class="verify-btn" onclick="checkAdminPassword()">Entrar</button>
+    </div>
+  </div>
+
+  <div class="admin-panel" id="adminPanel">
+    <button class="close-admin" onclick="hideAdminPanel()">×</button>
+    <h2>Painel Administrativo</h2>
+    
+    <div class="referral-tracking">
+      <h3>Verificar Indicações:</h3>
+      <input type="text" id="nameVerification" class="verification-input" placeholder="Nome Completo">
+      <input type="tel" id="phoneVerification" class="verification-input" placeholder="WhatsApp (ex: 11999999999)">
+      <button class="verify-btn" onclick="verifyReferrals()">Verificar Indicações</button>
+      <div id="referralList"></div>
+      
+      <div id="allReferrals">
+        <h3>Todas as Indicações</h3>
+        <div class="referral-table"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+let referralCount = 0;
+let referrals = [];
+
+const saveToLocalStorage = () => {
+  try {
+    localStorage.setItem('referrals', JSON.stringify(referrals));
+    localStorage.setItem('referralCount', referralCount);
+    localStorage.setItem('lastSaved', new Date().toISOString());
+  } catch (error) {
+    console.error('Error saving to localStorage:', error);
+  }
+};
+
+const loadFromLocalStorage = () => {
+  try {
+    const savedReferrals = localStorage.getItem('referrals');
+    const savedCount = localStorage.getItem('referralCount');
+    const lastSaved = localStorage.getItem('lastSaved');
+    
+    if (savedReferrals) {
+      referrals = JSON.parse(savedReferrals);
+      referrals = referrals.filter(ref => 
+        ref.name && 
+        ref.phone && 
+        ref.referralId && 
+        ref.date
+      );
+    }
+
+    if (savedCount) {
+      referralCount = parseInt(savedCount);
+      if (isNaN(referralCount)) {
+        referralCount = 0;
+      }
+    }
+    
+    updateReferralDisplay();
+    updateProgress();
+    updateDiscountCode();
+    displayAllReferrals();
+    
+    console.log(`Data loaded from localStorage. Last saved: ${lastSaved}`);
+  } catch (error) {
+    console.error('Error loading from localStorage:', error);
+    referrals = [];
+    referralCount = 0;
+  }
+};
+
+window.addEventListener('beforeunload', () => {
+  saveToLocalStorage();
+});
+
+setInterval(saveToLocalStorage, 5 * 60 * 1000);
+
+function generateReferralId() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let referralId = '';
+  for (let i = 0; i < 8; i++) {
+    referralId += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  
+  const timestamp = new Date().getTime().toString(36);
+  return `${referralId}-${timestamp}`;
+}
+
+function simulateWhatsAppReferral(referralId, phone) {
+  const name = document.getElementById('userName').value;
+  if (!name) {
+    alert('Por favor, insira seu nome antes de compartilhar');
+    return;
+  }
+  
+  const referralData = {
+    name: name,
+    phone: formatPhoneNumber(phone),
+    date: new Date().toLocaleDateString('pt-BR'),
+    referralId: referralId,
+    status: 'Confirmado',
+    timestamp: Date.now()
+  };
+  
+  referrals.unshift(referralData);
+  referralCount++;
+  
+  sendWhatsAppNotification(referralData.name, referralData.phone, 'Novo Cliente');
+  
+  saveToLocalStorage();
+  
+  updateReferralDisplay();
+  updateProgress();
+  updateDiscountCode();
+  displayAllReferrals();
+}
+
+function clearStoredData() {
+  try {
+    localStorage.removeItem('referrals');
+    localStorage.removeItem('referralCount');
+    localStorage.removeItem('lastSaved');
+    referrals = [];
+    referralCount = 0;
+    updateReferralDisplay();
+    updateProgress();
+    updateDiscountCode();
+    displayAllReferrals();
+    console.log('Stored data cleared successfully');
+  } catch (error) {
+    console.error('Error clearing stored data:', error);
+  }
+}
+
+async function sendWhatsAppNotification(referrerName, referrerPhone, newReferralPhone) {
+  const businessPhone = '5511999999999';
+  const message = encodeURIComponent(
+    `Nova indicação recebida!\n` +
+    `Indicador: ${referrerName}\n` +
+    `WhatsApp: ${referrerPhone}\n` +
+    `Novo cliente: ${newReferralPhone}\n` +
+    `Data: ${new Date().toLocaleDateString('pt-BR')}`
+  );
+  
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${businessPhone}&text=${message}`;
+  
+  window.open(whatsappUrl, '_blank');
+}
+
+function copyLink() {
+  const userName = document.getElementById('userName').value;
+  const userWhatsApp = document.getElementById('userWhatsApp').value;
+  
+  if (!userName || !userWhatsApp) {
+    alert('Por favor, insira seu nome e WhatsApp antes de compartilhar');
+    return;
+  }
+  
+  const shareLink = document.getElementById('shareLink');
+  const referralId = generateReferralId();
+  const fullLink = `${shareLink.value}&rid=${referralId}&phone=${encodeURIComponent(userWhatsApp)}&name=${encodeURIComponent(userName)}`;
+  
+  navigator.clipboard.writeText(fullLink).then(() => {
+    const copyBtn = document.querySelector('.copy-btn');
+    copyBtn.textContent = 'Copiado!';
+    copyBtn.classList.add('animation-success');
+
+    setTimeout(() => {
+      copyBtn.textContent = 'Copiar Link';
+      copyBtn.classList.remove('animation-success');
+    }, 2000);
+  });
+}
+
+function shareWhatsApp() {
+  const userName = document.getElementById('userName').value;
+  const userWhatsApp = document.getElementById('userWhatsApp').value;
+  
+  if (!userName || !userWhatsApp) {
+    alert('Por favor, insira seu nome e WhatsApp antes de compartilhar');
+    return;
+  }
+
+  const referralId = generateReferralId();
+  const shareLink = document.getElementById('shareLink').value;
+  const fullLink = `${shareLink}&rid=${referralId}&phone=${encodeURIComponent(userWhatsApp)}&name=${encodeURIComponent(userName)}`;
+  const message = encodeURIComponent(`Venha conhecer a Pousada Rústica! Use meu código de desconto: ${fullLink}`);
+  
+  simulateWhatsAppReferral(referralId, userWhatsApp);
+  
+  window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
+}
+
+function formatPhoneNumber(phone) {
+  const cleaned = phone.replace(/\D/g, '');
+  if (cleaned.length === 11) {
+    return `+55 ${cleaned.slice(0,2)} ${cleaned.slice(2,7)}-${cleaned.slice(7)}`;
+  }
+  return phone;
+}
+
+function displayAllReferrals() {
+  const referralTable = document.querySelector('.referral-table');
+  
+  const referralsByName = {};
+  referrals.forEach(ref => {
+    if (!referralsByName[ref.name]) {
+      referralsByName[ref.name] = {
+        name: ref.name,
+        phone: ref.phone,
+        referrals: [],
+        totalCount: 0
+      };
+    }
+    referralsByName[ref.name].referrals.push(ref);
+    referralsByName[ref.name].totalCount++;
+  });
+
+  const sortedNames = Object.keys(referralsByName).sort();
+
+  const html = `
+    <style>
+      .referral-group {
+        margin: 15px 0;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .referral-group-header {
+        background: #f5f5f5;
+        padding: 10px;
+        display: grid;
+        grid-template-columns: 2fr 2fr 1fr;
+        font-weight: bold;
+        border-bottom: 2px solid #ddd;
+      }
+      .referral-detail {
+        padding: 8px 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 80px;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+      }
+      .referral-detail:last-child {
+        border-bottom: none;
+      }
+      .referral-count {
+        background: #3498db;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        display: inline-block;
+      }
+    </style>
+    ${sortedNames.map(name => {
+      const referrer = referralsByName[name];
+      return `
+        <div class="referral-group">
+          <div class="referral-group-header">
+            <div>${referrer.name}</div>
+            <div>${referrer.phone}</div>
+            <div>
+              <span class="referral-count">
+                ${referrer.totalCount} indicação(ões)
+              </span>
+            </div>
+          </div>
+          ${referrer.referrals.map(ref => `
+            <div class="referral-detail">
+              <div>${ref.date}</div>
+              <div>${ref.referralId}</div>
+              <div>${ref.status || 'Confirmado'}</div>
+              <div>
+                <button class="delete-btn" onclick="deleteReferral('${ref.referralId}')">
+                  Excluir
+                </button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }).join('')}
+  `;
+
+  referralTable.innerHTML = html;
+}
+
+function verifyReferrals() {
+  const name = document.getElementById('nameVerification').value;
+  const phone = document.getElementById('phoneVerification').value;
+  
+  if (!phone || !name) {
+    alert('Por favor, insira seu nome e número de WhatsApp');
+    return;
+  }
+
+  const cleanedInputPhone = phone.replace(/\D/g, '');
+  const verifiedReferrals = referrals.filter(ref => 
+    ref.phone.replace(/\D/g, '').includes(cleanedInputPhone) &&
+    ref.name.toLowerCase() === name.toLowerCase()
+  );
+  
+  const referralList = document.getElementById('referralList');
+  if (verifiedReferrals.length > 0) {
+    referralList.innerHTML = `
+      <div class="referral-code-display">
+        <strong>${name}</strong><br>
+        Indicações verificadas: ${verifiedReferrals.length}<br>
+        Seu código de desconto: ${getDiscountCode(verifiedReferrals.length)}
+      </div>
+      ${verifiedReferrals.map(ref => `
+        <div style="padding: 10px; border-bottom: 1px solid #eee;">
+          <strong>ID da Indicação:</strong> ${ref.referralId}<br>
+          <strong>Nome:</strong> ${ref.name}<br>
+          <strong>WhatsApp:</strong> ${ref.phone}<br>
+          <small>Data: ${ref.date}</small>
+        </div>
+      `).join('')}
+    `;
+  } else {
+    referralList.innerHTML = '<p>Nenhuma indicação encontrada para este nome e número.</p>';
+  }
+}
+
+function getDiscountCode(referralCount) {
+  if (referralCount >= 3) return 'AMIGO15';
+  return 'AMIGO10';
+}
+
+function updateReferralDisplay() {
+  document.getElementById('referralCount').textContent = referralCount;
+}
+
+function updateProgress() {
+  const progressBar = document.getElementById('progressBar');
+  const progress = (referralCount / 5) * 100;
+  progressBar.style.width = Math.min(progress, 100) + '%';
+}
+
+function updateDiscountCode() {
+  const discountCode = document.getElementById('discountCode');
+  discountCode.textContent = getDiscountCode(referralCount);
+}
+
+document.addEventListener('DOMContentLoaded', loadFromLocalStorage);
+
+window.addEventListener('load', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const rid = urlParams.get('rid');
+  const phone = urlParams.get('phone');
+  if (rid && phone) {
+    localStorage.setItem('lastReferral', rid);
+    localStorage.setItem('referrerPhone', phone);
+    
+    const referrerPhone = formatPhoneNumber(phone);
+    const currentUserPhone = 'Novo Cliente';
+    sendWhatsAppNotification(referrerPhone, currentUserPhone);
+  }
+});
+
+function showAdminPanel() {
+  document.getElementById('adminLogin').style.display = 'block';
+  document.getElementById('adminOverlay').style.display = 'block';
+}
+
+function checkAdminPassword() {
+  const password = document.getElementById('adminPassword').value;
+  if (password === '13x4in3') {
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+  } else {
+    alert('Senha incorreta');
+  }
+}
+
+function hideAdminPanel() {
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('adminOverlay').style.display = 'none';
+  document.getElementById('adminLogin').style.display = 'none';
+  document.getElementById('adminPassword').value = '';
+}
+
+function deleteReferral(referralId) {
+  if (confirm('Tem certeza que deseja excluir esta indicação?')) {
+    referrals = referrals.filter(ref => ref.referralId !== referralId);
+    referralCount = referrals.length;
+    saveToLocalStorage();
+    displayAllReferrals();
+    updateReferralDisplay();
+    updateProgress();
+    updateDiscountCode();
+  }
+}
+</script>
+
+</body></html>
